@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">QuattroPro</string>
+
+    <string name="temp">Температура</string>
+    <string name="pressure">Давление</string>
+    <string name="humidity">Влажность</string>
+    <string name="pressureUnits">мм рт.ст</string>
+    <string name="today">Сейчас</string>
+    <string name="forFiveDays">На пять дней</string>
+</resources>
