@@ -11,7 +11,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -24,12 +24,12 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.alextebenev.quattropro.App;
 import com.example.alextebenev.quattropro.R;
 import com.example.alextebenev.quattropro.retrofit.GooglePlaceApi;
 import com.example.alextebenev.quattropro.retrofit.OpenWeatherApi;
 
 import com.example.alextebenev.quattropro.retrofit.entity.PlaceInformationResponce;
-import com.example.alextebenev.quattropro.retrofit.RetrofitHolder;
 
 import com.example.alextebenev.quattropro.retrofit.entity.PlaceObjectsResponse;
 import com.example.alextebenev.quattropro.retrofit.entity.WeatherListElement;
@@ -41,6 +41,8 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -49,7 +51,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
@@ -75,16 +76,20 @@ public class CurentWeatherFragment extends Fragment {
     @InjectView(R.id.progress)
     ProgressBar progress;
 
-
     Bitmap bmp;
     String city;
     WeatherListElement weatherObject;
 
+    @Inject
+    OpenWeatherApi openWeatherApi;
+
+    @Inject
+    GooglePlaceApi googlePlaceApi;
+
 
     private CompositeSubscription compositeSubscription = new CompositeSubscription();
     private OnFragmentInteractionListener mListener;
-    private OpenWeatherApi openWeatherApi = RetrofitHolder.getInstance().getOpenweatherMapInterface();
-    private GooglePlaceApi googlePlaceApi = RetrofitHolder.getInstance().getGoogleApiInterface();
+
 
 
     @Override
@@ -334,4 +339,9 @@ public class CurentWeatherFragment extends Fragment {
         return builderImageName.toString();
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        ((App)getActivity().getApplication()).getComponent().inject(this);
+    }
 }

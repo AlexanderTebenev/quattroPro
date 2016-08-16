@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,9 @@ import android.widget.TextView;
 import com.example.alextebenev.quattropro.R;
 import com.example.alextebenev.quattropro.adapter.WeatherFiveDaysAdapter;
 import com.example.alextebenev.quattropro.retrofit.OpenWeatherApi;
-import com.example.alextebenev.quattropro.retrofit.RetrofitHolder;
 import com.example.alextebenev.quattropro.retrofit.entity.WeatherFiveDaysResponse;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -37,7 +37,10 @@ public class FiveDaysWeatherFragment extends Fragment {
     String city;
     WeatherFiveDaysResponse weatherFiveDaysResponse;
     private WeatherFiveDaysAdapter adapter;
-    private OpenWeatherApi openWeatherApi = RetrofitHolder.getInstance().getOpenweatherMapInterface();
+
+    @Inject
+    OpenWeatherApi openWeatherApi;
+
     private CompositeSubscription compositeSubscription  = new CompositeSubscription();
 
     @Override
